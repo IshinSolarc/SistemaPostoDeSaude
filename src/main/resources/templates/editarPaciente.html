@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posto Saúde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+    </script>
+</head>
+<body class="bg-gray-800 p-2">
+
+	<nav class="bg-white dark:bg-gray-800 p-2">
+		<a href="/">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Inicio</button>
+		</a>
+		<a href="/pacientes">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pacientes</button>
+		</a>
+		<a href="/medicos">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Médicos</button>
+		</a>
+		<a href="/consultas">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Consultas</button>
+		</a>
+		
+	   	<a href="/bairros">
+	   	<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bairros</button>
+	    </a>          
+	</nav>
+    
+    
+    <div class="flex flex-col items-center">
+			<h1 class="text-3xl font-bold text-white mb-8">Alterando Paciente</h1>
+			
+			<form method="post" action="/alterarPaciente" class="w-1/3 mb-5">
+                <div class="flex flex-col items-center justify-between">
+                    <label for="nome" class="text-white mr-2 font-bold text-2xl">Nome</label>
+                    <input type="text" name="nome" th:value="${paciente.nome}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                    <label for="cpf" class="text-white mr-2 font-bold text-2xl">CPF</label>
+                    <input type="text" name="cpf" th:value="${paciente.cpf}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                    <label for="dataNascimento" class="text-white mr-2 font-bold text-2xl">Data de Nascimento</label>
+                    <input type="date" name="dataNascimento" th:value="${paciente.dataNascimento}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                    <label for="email" class="text-white mr-2 font-bold text-2xl">Email</label>
+					<input type="text" name="email" th:value="${paciente.email}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+					<label for="telefone" class="text-white mr-2 font-bold text-2xl">Telefone</label>
+					<input type="text" name="telefone" th:value="${paciente.telefone}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+					<label for="bairro" class="text-white mr-2 font-bold text-2xl">Bairro</label>
+					<select name="bairro" class="border rounded px-4 py-2 w-2/3 bg-gray-700 text-white">
+					    <option th:if="${paciente.endereco.bairro.id == bairro.id}" th:each="bairro : ${bairros}" th:value="${bairro.nome}" th:text="${bairro.nome}" selected="selected"></option>
+					    <option th:if="${paciente.endereco.bairro.id != bairro.id}" th:each="bairro : ${bairros}" th:value="${bairro.nome}" th:text="${bairro.nome}"></option>
+					</select>
+						
+                    <label for="rua" class="text-white mr-2 font-bold text-2xl">Rua</label>
+                    <input type="text" name="rua" th:value="${paciente.endereco.rua}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                    <label for="numero" class="text-white mr-2 font-bold text-2xl">Número</label>
+                    <input type="text" name="numero" th:value="${paciente.endereco.numero}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                    <label for="complemento" class="text-white mr-2 font-bold text-2xl">Complemento</label>
+                    <input type="text" name="complemento" th:value="${paciente.endereco.complemento}" class="w-2/3 p-2 rounded-lg bg-gray-700 text-white">
+                         
+					<input type="hidden" name="id" th:value="${paciente.id}">
+					<button type="submit" class="mt-5 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Alterar</button>
+                    
+				</div>
+			</form>
+	</div>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posto Saúde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+    </script>
+</head>
+<body class="bg-gray-800 p-2">
+
+	<nav class="bg-white dark:bg-gray-800 p-2">
+		<a href="/">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Inicio</button>
+		</a>
+		<a href="/pacientes">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pacientes</button>
+		</a>
+		<a href="/medicos">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Médicos</button>
+		</a>
+		<a href="/consultas">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Consultas</button>
+		</a>
+		
+	   	<a href="/bairros">
+	   	<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bairros</button>
+	    </a>          
+	</nav>
+    
+    
+    <div class="flex flex-col items-center">
+			<h1 class="text-3xl font-bold text-white mb-8">Medicos</h1>
+			
+			<form method="get" action="/medicos" class="w-1/3 mb-5">
+				<div class="flex flex-row items-center justify-between">
+					<label for="busca" class="text-white mr-2 font-bold text-2xl">Busca</label>
+					<input type="text" name="busca" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<label for="tipoDeBusca" class="text-white ml-2 mr-2 text-2xl font-bold">Tipo</label>
+					<select name="tipoDeBusca" class="border rounded px-4 py-2 w-1/2 bg-gray-700 text-white">
+						<option value="nome">Nome</option>
+						<option value="cpf">CPF</option>
+						<option value="especialidade">Especialidade</option>
+						<option value="idmedico">ID</option>
+					</select>
+					<button type="submit"
+						class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Buscar</button>
+				</div>
+				</form>
+			
+			<table class="table-auto w-2/3">
+				<thead>
+					<tr>
+						<th class="px-4 py-2 text-white">ID</th>
+						<th class="px-4 py-2 text-white">Nome</th>
+						<th class="px-4 py-2 text-white">CPF</th>
+						<th class="px-4 py-2 text-white">Data de Nascimento</th>
+						<th class="px-4 py-2 text-white">Bairro de Trabalho</th>
+						<th class="px-4 py-2 text-white">Especialidade</th>
+						<th class="px-4 py-2 text-white">Telefone</th>
+						<th class="px-4 py-2 text-white">Ações</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="medico : ${medicos}">
+						<td class="border px-4 py-2 text-white" th:text="${medico.idMedico}">ID</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.nome}">Nome</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.cpf}">CPF</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.dataNascimento}">Data de Nascimento</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.bairro.nome}">Bairro de Trabalho</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.especialidade}">Especialidade</td>
+						<td class="border px-4 py-2 text-white" th:text="${medico.telefone}">Telefone
+						<td class="border px-4 py-2 text-white flex flex-row">
+							<form method="get" action="/editarMedico">
+                                <input type="hidden" name="id" th:value="${medico.id}" />
+                                <button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold m-2 py-3 px-4 rounded"> Editar </button>
+                                </form>
+							<form method="post" action="/excluirMedico">
+							    <input type="hidden" name="id" th:value="${medico.id}" />
+							    <button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold m-2 py-3 px-4 rounded"> Excluir </button>
+							</form>
+						</td>
+					</tr>
+				</tbody>
+				</table>
+		</div>
+		
+			<div class="flex flex-col items-center mt-20">
+			<h1 class="text-3xl font-bold text-white">Inserir novo medico</h1>
+			<form method="post" action="/inserirMedico" class="w-1/4">
+				<div class="flex flex-col items-center">
+					<label for="nome" class="text-white mt-2">Nome</label>
+					<input type="text" name="nome" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<label for="cpf" class="text-white mt-2">CPF</label>
+					<input type="text" name="cpf" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<label for="dataNascimento" class="text-white mt-2">Data de Nascimento</label>
+					<input type="date" name="dataNascimento" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<label for="bairro" class="text-white mt-2">Bairro de Trabalho</label>
+					<select name="bairro" class="border rounded px-4 py-2 w-full bg-gray-700 text-white">
+						<option th:each="bairro : ${bairros}" th:value="${bairro.id}" th:text="${bairro.nome}"></option>
+					</select>
+					<label for="especialidade" class="text-white mt-2">Especialidade</label>
+					<input type="text" name="especialidade" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<label for="telefone" class="text-white mt-2">Telefone</label>
+					<input type="text" name="telefone" class="border rounded px-4 py-2 w-full bg-gray-700 text-white" />
+					<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-4">Inserir</button>
+	            </div>
+			</form>
+		</div>
+</body>
+</html>

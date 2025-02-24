@@ -1,0 +1,113 @@
+<project xmlns="https://maven.apache.org/POM/4.0.0" xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="https://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+
+<modelVersion>
+	4.0.0
+</modelVersion>
+
+<groupId>
+	br.edu.utfpr.td.tsi
+</groupId>
+
+<artifactId>
+	postosaude
+</artifactId>
+
+<version>
+	0.0.1-SNAPSHOT
+</version>
+
+<parent>
+	<groupId>
+		org.springframework.boot
+	</groupId>
+	<artifactId>
+		spring-boot-starter-parent
+	</artifactId>
+	<version>
+		2.6.5
+	</version>
+	<relativePath/>
+</parent>
+
+
+<properties>
+	<project.build.sourceEncoding>
+		UTF-8
+	</project.build.sourceEncoding>
+	<project.reporting.outputEncoding>
+		UTF-8
+	</project.reporting.outputEncoding>
+	
+	
+	<java.version>17</java.version>
+	<maven.compiler.source>17</maven.compiler.source>
+	<maven.compiler.target>17</maven.compiler.target>
+</properties>
+
+
+<dependencies>
+
+	<dependency>
+    <groupId>org.springframework.data</groupId>
+   	<artifactId>spring-data-mongodb</artifactId>
+   	 </dependency>
+   	 
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-data-mongodb</artifactId>
+		    </dependency>
+		<dependency>
+		    <groupId>org.springframework.data</groupId>
+		    <artifactId>spring-data-jpa</artifactId>
+		    </dependency>
+
+	<dependency>
+    <groupId>com.github.gilmardeveloper</groupId>
+    <artifactId>safeguard</artifactId>
+    <version>0.0.1-RELEASE</version>
+</dependency>
+
+
+	<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-web</artifactId>
+	</dependency>
+	
+	<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-thymeleaf</artifactId>
+	</dependency>
+	
+	<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-devtools</artifactId>
+	</dependency>
+	
+	<dependency>
+    <groupId>org.mongodb</groupId>
+    <artifactId>mongo-java-driver</artifactId>
+    <version>3.12.14</version>
+	</dependency>
+	
+	<dependency>
+  <groupId>org.apache.solr</groupId>
+  <artifactId>solr-solrj</artifactId>
+  <version>8.11.0</version>
+</dependency>
+	
+	
+
+	
+</dependencies>
+
+
+<packaging>jar</packaging>
+<build>
+    <plugins>
+        <plugin>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-maven-plugin</artifactId>
+        </plugin>
+    </plugins>
+    </build>
+</project>

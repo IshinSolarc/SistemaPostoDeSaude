@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posto Saúde</title>
+<script src="https://cdn.tailwindcss.com"></script>
+
+<script>
+	
+</script>
+</head>
+<body class="bg-gray-800 p-2">
+
+	<nav class="bg-white dark:bg-gray-800 p-2">
+		<a href="/">
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Inicio</button>
+		</a> <a href="/pacientes">
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pacientes</button>
+		</a> <a href="/medicos">
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Médicos</button>
+		</a> <a href="/consultas">
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Consultas</button>
+		</a> <a href="/bairros">
+			<button
+				class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bairros</button>
+		</a>
+	</nav>
+
+	<div class="flex flex-col items-center">
+		<h1 class="text-3xl font-bold text-white mb-8"
+			th:if="${paciente.nome == null}">Consultas</h1>
+		<h1 class="text-3xl font-bold text-white mb-8"
+			th:if="${paciente.nome != null}"
+			th:text="${'Consultas do paciente '} + ${paciente.nome}">Paciente</h1>
+			
+		<form method="get" action="/consultas" class="w-2/3 mb-5">
+			<div class="flex items-center justify-between">
+			    <input type="hidden" name="paciente" th:if="${paciente != null}" th:value="${paciente.id}">
+				<label class="text-nowrap text-white mx-2 font-bold text-xl">Em diagnostico:</label>
+				<input type="text" name="buscadiagnostico" class="border rounded px-4 py-2 w-full bg-gray-700 text-white">
+				<label class="text-nowrap text-white mx-2 font-bold text-xl">Em receita:</label>
+				<input type="text" name="buscareceita" class="border rounded px-4 py-2 w-full bg-gray-700 text-white">
+				<button type="submit" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-2">Buscar</button>
+			</div>
+		</form>
+
+		<div class="flex flex-row flex-wrap flex-center justify-evenly">
+			<div th:each="consulta : ${consultas}">
+				<div
+					class="relative flex flex-col my-6 bg-slate-900 shadow-sm border border-slate-200 rounded-lg pb-6 w-96 mx-5"
+					th:if="${consulta.situacao == 'agendada'}">
+					<div class="flex flex-col space-y-3 p-5">
+						<h1 class="text-white font-bold text-3xl"
+							th:text="${'Consulta: '} + ${consulta.idConsulta}">Data</h1>
+						<br>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Data: '} + ${consulta.data}">Data</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Horário: '} + ${consulta.horario}">Horário</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Paciente: '} + ${consulta.paciente.nome}">Paciente</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Médico: '} + ${consulta.medico.nome}">Médico</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Especialidade: '} + ${consulta.medico.especialidade}">Situação</h1>
+						<div class="flex flex-row">
+							<h1 class="text-white font-bold text-xl">Situação:</h1>
+							<h1 class="text-blue-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'agendada'}"
+								th:text="${'&nbsp;'} + ${'Agendada'}"></h1>
+							<h1 class="text-green-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'realizada'}"
+								th:text="${'&nbsp;'} + ${'Realizada'}"> 
+								</h1>
+							<h1 class="text-red-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'cancelada'}"
+								th:text="${'&nbsp;'} + ${'Cancelada'}"></h1>
+						</div>
+
+						<div class="flex flex-row pt-4 my-8 justify-around"
+							th:if="${consulta.situacao == 'agendada'}">
+							<form method="get" action="/cancelarConsulta">
+								<input type="hidden" name="id" th:value="${consulta.id}">
+								<button type="submit"
+									class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancelar</button>
+							</form>
+							<form method="get" action="/realizarConsulta">
+								<input type="hidden" name="id" th:value="${consulta.id}">
+								<button type="submit"
+									class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Concluir</button>
+							</form>
+						</div>
+					</div>
+				</div>
+				<div
+					class="relative flex flex-col my-6 bg-slate-900 shadow-sm border border-slate-200 rounded-lg pb-16 w-96 mx-5"
+					th:if="${consulta.situacao != 'agendada'}">
+					<div class="flex flex-col space-y-3 p-5">
+						<h1 class="text-white font-bold text-3xl"
+							th:text="${'Consulta: '} + ${consulta.idConsulta}">Data</h1>
+						<br>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Data: '} + ${consulta.data}">Data</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Horário: '} + ${consulta.horario}">Horário</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Paciente: '} + ${consulta.paciente.nome}">Paciente</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Médico: '} + ${consulta.medico.nome}">Médico</h1>
+						<h1 class="text-white font-bold text-xl"
+							th:text="${'Especialidade: '} + ${consulta.medico.especialidade}">Situação</h1>
+						<div class="flex flex-row">
+							<h1 class="text-white font-bold text-xl">Situação:</h1>
+							<h1 class="text-blue-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'agendada'}"
+								th:text="${'&nbsp;'} + ${'Agendada'}"></h1>
+							<h1 class="text-green-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'realizada'}"
+								th:text="${'&nbsp;'} + ${'Realizada'}"></h1>
+							<h1 class="text-red-400 font-bold text-xl"
+								th:if="${consulta.situacao == 'cancelada'}"
+								th:text="${'&nbsp;'} + ${'Cancelada'}"></h1>
+						</div>
+						<div class="flex flex-row pt-4 my-8 justify-around"
+							th:if="${consulta.situacao == 'realizada'}">
+							<form method="get" action="/verConsulta">
+                                <input type="hidden" name="id" th:value="${consulta.id}">
+                                <button type="submit"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Ver Consulta</button>
+                             </form>
+                             <form method="get" action="/deletarConsulta">
+								<input type="hidden" name="id" th:value="${consulta.id}">
+								<button type="submit" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Excluir Consulta</button>
+							</form>
+                        </div>
+                        <div class="flex flex-row pt-4 my-8 justify-around"
+                        	th:if="${consulta.situacao == 'cancelada'}">
+                        	<br>
+                        	<br>
+                        	<br>
+                        </div>                        
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+
+</body>
+</html>

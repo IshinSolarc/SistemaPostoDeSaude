@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Posto Saúde</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script>
+    function voltar() {
+		window.history.back();
+	}
+    
+    </script>
+</head>
+<body class="bg-gray-800 p-2">
+
+	<nav class="bg-white dark:bg-gray-800 p-2">
+		<a href="/">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Inicio</button>
+		</a>
+		<a href="/pacientes">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Pacientes</button>
+		</a>
+		<a href="/medicos">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Médicos</button>
+		</a>
+		<a href="/consultas">
+		<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Consultas</button>
+		</a>
+		
+	   	<a href="/bairros">
+	   	<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bairros</button>
+	    </a>          
+	</nav>
+	
+    <div class="flex flex-col items-center">
+    	<h1 class="text-3xl font-bold text-white mb-8" th:text="${'Consulta: '} + ${consulta.idConsulta}"></h1>
+		<div class="flex flex-row items-center justify-between w-2/3">
+				<button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mt-5" onclick="voltar()">Voltar</button>
+		</div>
+    		
+		<div class="w-2/3 text-white mb-5">
+			<b>Paciente: </b> <span th:text="${paciente.nome}"></span><br>
+			<b>Médico: </b> <span th:text="${medico.nome}"></span><br>
+			<b>Especialidade: </b> <span th:text="${medico.especialidade}"></span><br>
+			<b>Data: </b> <span th:text="${consulta.data}"></span><br>
+			<b>Horário: </b> <span th:text="${consulta.horario}"></span><br>
+			<h2 class="text-white text-2xl">Diagnostico</h2>
+			<p class="text-white text-xl" th:text="${consulta.diagnostico}"></p>
+			<h2 class="text-white text-2xl">Receita</h2>
+			<p class="text-white text-xl" th:text="${consulta.receita}"></p>
+		</div>			
+	</div>
+</body>
+</html>
